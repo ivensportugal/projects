@@ -1,28 +1,32 @@
-# Generic
-from dotenv import load_dotenv
-
 # HuggingFace
-from transformers import pipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+from langchain_huggingface.llms import HuggingFacePipeline
 
-# # OpenAI
-# from langchain.prompts import PromptTemplate
-# from langchain.chains import LLMChain
+# OpenAI
+from langchain_core.prompts import PromptTemplate
+# from langchain_core.chains import LLMChain
 
-pipe = pipeline(task="text-generation", model="openai-community/gpt2")
-answer = pipe('What is the capital of Brazil?', pad_token_id=pipe.tokenizer.eos_token_id)
+model_id = "openai-community/gpt2"
+
+llm = pipeline(task="text-generation", model=model_id)
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=10)
+hf = HuggingFacePipeline(pipeline=pipe)
+
+
+capital_template = "What is the capital of {country}?"
+capital_prompt = PromptTemplate.from_template(capital_template)
+
+chain = capital_prompt | hf
+
+country = "Brazil"
+
+# country_chain = LLMChain(llm=llm, prompt=capital_prompt)
+answer = chain.invoke({"country": country})
+
 print(answer)
-print('***')
-print(answer[0]['generated_text'])
-print('***')
 
-
-
-# prompt = PromptTemplate(
-# 	input_variables = ['country'],
-# 	template = "What is the capital of {country}?"
-# 	)
-
-# LLMChain(llm = )
 
 # prompt.format(country="Brazil")
 
