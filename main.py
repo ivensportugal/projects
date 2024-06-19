@@ -4,9 +4,8 @@ from langchain_huggingface.llms import HuggingFacePipeline
 
 # OpenAI
 from langchain_core.prompts import PromptTemplate
-# from langchain_core.chains import LLMChain
 
-model_id = "openai-community/gpt2"
+model_id = "gpt2"
 
 llm = pipeline(task="text-generation", model=model_id)
 tokenizer = AutoTokenizer.from_pretrained(model_id)
@@ -18,19 +17,14 @@ hf = HuggingFacePipeline(pipeline=pipe)
 capital_template = "What is the capital of {country}?"
 capital_prompt = PromptTemplate.from_template(capital_template)
 
-chain = capital_prompt | hf
+population_template = "What is the population of {capital}?"
+population_prompt = PromptTemplate.from_template(population_template)
+
+chain = capital_prompt | population_prompt | hf
 
 country = "Brazil"
 
-# country_chain = LLMChain(llm=llm, prompt=capital_prompt)
 answer = chain.invoke({"country": country})
 
+print(type(answer))
 print(answer)
-
-
-# prompt.format(country="Brazil")
-
-
-# pipe = pipeline("text2text-generation", model="google/flan-t5-base")
-# print(pipe("What is the capital of Brazil?")['text_generated'])
-
