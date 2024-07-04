@@ -1,0 +1,11 @@
+grade1,grade2,grade3,grade4,grade5,pass
+2,3,3,3,10,pass
+3,0,5,5,9,fail
+4,10,3,9,8,pass
+4,4,8,0,7,fail
+1,4,7,3,4,fail
+10,4,9,10,2,pass
+1,8,0,4,2,fail
+5,9,0,0,5,fail
+2,7,9,6,5,pass
+5,0,5,5,2,fail
