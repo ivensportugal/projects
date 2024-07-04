@@ -5,7 +5,8 @@ from langchain_huggingface.llms import HuggingFacePipeline
 # OpenAI
 from langchain_core.prompts import PromptTemplate
 
-model_id = "gpt2"
+# model_id = "Qwen/Qwen2-72B-Instruct"
+model_id="gpt2"
 
 llm = pipeline(task="text-generation", model=model_id)
 tokenizer = AutoTokenizer.from_pretrained(model_id)
