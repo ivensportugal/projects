@@ -35,7 +35,7 @@ class CSVDataset(Dataset):
 
 
 
-training_data = CSVDataset('input.csv')
+training_data = CSVDataset('input11.csv')
 
 
 
@@ -65,7 +65,7 @@ class NeuralNetwork(nn.Module):
 		super().__init__()
 		self.flatten = nn.Flatten()
 		self.linear_stack = nn.Sequential(
-			nn.Linear(2, 1),
+			nn.Linear(1, 1),
 			# nn.ReLU()
 		)
 
@@ -127,9 +127,9 @@ epochs = 100
 for t in range(epochs):
     print(f"Epoch {t+1}\n-------------------------------")
     train(train_dataloader, model, loss_fn, optimizer)
-    test(test_dataloader, model, loss_fn)
+    # test(test_dataloader, model, loss_fn)
 print("Done!")
 
-x = torch.tensor([[51,2]],dtype=torch.float).to(device)
+x = torch.tensor([[51]],dtype=torch.float).to(device)
 y = model(x)
 print(y.item())
